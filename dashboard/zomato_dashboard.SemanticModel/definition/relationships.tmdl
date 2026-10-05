@@ -1,0 +1,21 @@
+relationship AutoDetected_806e539e-912a-4626-9da8-91a542f9e9f3
+	crossFilteringBehavior: bothDirections
+	fromColumn: RestaurantCuisines.restaurant_id
+	toColumn: Restaurants.restaurant_id
+
+relationship AutoDetected_d2582b6a-cdf4-405d-b458-015facf6f099
+	fromColumn: Restaurants.city
+	toColumn: DimCity.city
+
+relationship AutoDetected_653aebbb-11a7-41dc-9242-02de7a01b824
+	fromColumn: Restaurants.price_range
+	toColumn: DimPriceRange.price_range
+
+relationship AutoDetected_553317bb-3a73-45d6-a7a8-46010abedebd
+	fromColumn: RestaurantCuisines.cuisine
+	toColumn: DimCuisine.cuisine
+
+relationship 23eb4dbf-0a90-4894-97fe-f0f2190f8637
+	fromColumn: Restaurants.cost_bucket
+	toColumn: DimCostBucket.cost_bucket
+

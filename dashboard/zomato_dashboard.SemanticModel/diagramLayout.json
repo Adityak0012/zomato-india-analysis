@@ -1,0 +1,113 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 50,
+            "y": -50
+          },
+          "nodeIndex": "DimCity",
+          "nodeLineageTag": "27d2da48-8fc8-40a7-8001-27018cac8ea1",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 334.59946002416228,
+            "y": 42.492740993175062
+          },
+          "nodeIndex": "DimCuisine",
+          "nodeLineageTag": "cea10b8f-edc4-4eaa-93e7-39fc810666ac",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 193.91378085566632,
+            "y": 708.77202154980137
+          },
+          "nodeIndex": "DimPriceRange",
+          "nodeLineageTag": "689e2744-7799-48f1-872e-ea86c57b4acb",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 620.84384254284726,
+            "y": 176.64397547256851
+          },
+          "nodeIndex": "RestaurantCuisines",
+          "nodeLineageTag": "2860d465-fa3a-48a5-a9b9-4b3d4b7c46c3",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 459.99025666328305,
+            "y": 355.97022562413372
+          },
+          "nodeIndex": "Restaurants",
+          "nodeLineageTag": "cb36a6d7-b3fa-4327-8472-e6eb3513cb69",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 854.84384254284726,
+            "y": 391.38601077490068
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "22ce124f-095d-493f-b56e-0a8455d8f8b4",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1088.8438425428471,
+            "y": 379.38601077490068
+          },
+          "nodeIndex": "DimCostBucket",
+          "nodeLineageTag": "3e59818f-261d-4930-b59b-ddf66593c62c",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

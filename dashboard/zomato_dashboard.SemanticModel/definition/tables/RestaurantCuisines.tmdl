@@ -1,0 +1,34 @@
+table RestaurantCuisines
+	lineageTag: 2860d465-fa3a-48a5-a9b9-4b3d4b7c46c3
+
+	column restaurant_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a736c0f-c84d-4ad8-aa1f-66dd6912b08c
+		summarizeBy: none
+		sourceColumn: restaurant_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cuisine
+		dataType: string
+		lineageTag: a23920ed-d447-4d78-b426-3fff27e8edc0
+		summarizeBy: none
+		sourceColumn: cuisine
+
+		annotation SummarizationSetBy = Automatic
+
+	partition RestaurantCuisines = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\dell\Documents\zomato-india-analysis\data\processed\restaurant_cuisines.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"restaurant_id", Int64.Type}, {"cuisine", type text}})
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

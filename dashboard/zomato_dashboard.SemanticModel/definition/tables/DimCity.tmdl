@@ -1,0 +1,33 @@
+table DimCity
+	lineageTag: 27d2da48-8fc8-40a7-8001-27018cac8ea1
+
+	column city
+		dataType: string
+		lineageTag: 924d6d70-ee1f-4159-8295-3900441d3357
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 34761d51-1d67-4f41-b1dc-2f3bad003311
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCity = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\dell\Documents\zomato-india-analysis\data\processed\dim_city.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"city", type text}, {"region", type text}})
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

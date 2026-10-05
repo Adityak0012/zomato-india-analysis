@@ -1,0 +1,200 @@
+table Restaurants
+	lineageTag: cb36a6d7-b3fa-4327-8472-e6eb3513cb69
+
+	column restaurant_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 6787122e-7581-4bd5-a58c-58628ba9ebbf
+		summarizeBy: none
+		sourceColumn: restaurant_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column restaurant_name
+		dataType: string
+		lineageTag: 7e2b5bf4-1ab5-4c91-b1c6-4aba31a81d86
+		summarizeBy: none
+		sourceColumn: restaurant_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 9ad0346e-572f-4a34-8e9f-e9ab034b9d62
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column locality
+		dataType: string
+		lineageTag: cccebad3-13b2-4643-9304-2ae674fc1eae
+		summarizeBy: none
+		sourceColumn: locality
+
+		annotation SummarizationSetBy = Automatic
+
+	column average_cost_for_two
+		dataType: double
+		lineageTag: ef38dbe7-9f47-4a5c-8c5e-045aaf56dc30
+		summarizeBy: sum
+		sourceColumn: average_cost_for_two
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column has_table_booking
+		dataType: int64
+		formatString: 0
+		lineageTag: fda6293c-43de-4e11-a5f1-8f09ffee84ad
+		summarizeBy: sum
+		sourceColumn: has_table_booking
+
+		annotation SummarizationSetBy = Automatic
+
+	column has_online_delivery
+		dataType: int64
+		formatString: 0
+		lineageTag: 8394b3c9-bd0b-47c7-bb7f-e2603af2dcc2
+		summarizeBy: sum
+		sourceColumn: has_online_delivery
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_range
+		dataType: int64
+		formatString: 0
+		lineageTag: 78e626a8-9fb3-4759-b578-d6502e7b93bc
+		summarizeBy: none
+		sourceColumn: price_range
+
+		annotation SummarizationSetBy = Automatic
+
+	column aggregate_rating
+		dataType: double
+		lineageTag: 6df4e7b9-a77c-4b7b-a8d2-b5c959c27b2d
+		summarizeBy: sum
+		sourceColumn: aggregate_rating
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rating_text
+		dataType: string
+		lineageTag: a617bc17-e0b8-467a-8a3a-82f0c7a3bdbb
+		summarizeBy: none
+		sourceColumn: rating_text
+
+		annotation SummarizationSetBy = Automatic
+
+	column votes
+		dataType: int64
+		formatString: 0
+		lineageTag: 77176b62-0349-4202-b1e4-b5dc18f29ee8
+		summarizeBy: sum
+		sourceColumn: votes
+
+		annotation SummarizationSetBy = Automatic
+
+	column latitude
+		dataType: double
+		lineageTag: a024d863-916b-4896-8289-280308762ce1
+		summarizeBy: sum
+		sourceColumn: latitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column longitude
+		dataType: double
+		lineageTag: e33679c5-fa1c-4d16-8192-d66220d3a553
+		summarizeBy: sum
+		sourceColumn: longitude
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column is_rated
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d681ca1-4a32-4d50-96fc-cdd4fcb099a1
+		summarizeBy: sum
+		sourceColumn: is_rated
+
+		annotation SummarizationSetBy = Automatic
+
+	column region
+		dataType: string
+		lineageTag: 60379437-6dbd-4c8b-b4fb-c9665250f400
+		summarizeBy: none
+		sourceColumn: region
+
+		annotation SummarizationSetBy = Automatic
+
+	column primary_cuisine
+		dataType: string
+		lineageTag: 1fcf5f1f-689c-4c6a-9702-31b67c9c0c06
+		summarizeBy: none
+		sourceColumn: primary_cuisine
+
+		annotation SummarizationSetBy = Automatic
+
+	column cuisine_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 84ce6fc6-e179-4f98-812e-516053c668a0
+		summarizeBy: sum
+		sourceColumn: cuisine_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column cost_bucket
+		dataType: string
+		lineageTag: f98b4752-40b0-4775-8be7-3636e55532cd
+		summarizeBy: none
+		sourceColumn: cost_bucket
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Online Delivery' = IF ( Restaurants[has_online_delivery] = 1, "Yes", "No" )
+		dataType: string
+		lineageTag: 7f0e0ac3-9982-4a75-93c8-d7f0b590bddf
+
+	column 'Table Booking' = IF ( Restaurants[has_table_booking] = 1, "Yes", "No" )
+		dataType: string
+		lineageTag: 66cf3830-9313-401a-af6d-f74fab2d7419
+
+	column 'Vote Band' = SWITCH ( TRUE (), Restaurants[votes] <= 10, "Up to 10", Restaurants[votes] <= 50, "11-50", Restaurants[votes] <= 200, "51-200", Restaurants[votes] <= 1000, "201-1000", "1000+" )
+		dataType: string
+		lineageTag: a2e7b1e2-7249-49a0-952b-27fa616f38dd
+		sortByColumn: 'Vote Band Order'
+
+	column 'Vote Band Order' = SWITCH ( TRUE (), Restaurants[votes] <= 10, 1, Restaurants[votes] <= 50, 2, Restaurants[votes] <= 200, 3, Restaurants[votes] <= 1000, 4, 5 )
+		dataType: int64
+		isHidden
+		lineageTag: 3b9d2f41-6c1e-4f7a-9a52-1d8e0c7b4a11
+		summarizeBy: none
+
+	partition Restaurants = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\dell\Documents\zomato-india-analysis\data\processed\zomato_india_clean.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {
+				        {"restaurant_id", Int64.Type}, {"restaurant_name", type text}, {"city", type text}, {"locality", type text},
+				        {"average_cost_for_two", type number}, {"has_table_booking", Int64.Type}, {"has_online_delivery", Int64.Type},
+				        {"price_range", Int64.Type}, {"aggregate_rating", type number}, {"rating_text", type text}, {"votes", Int64.Type},
+				        {"latitude", type number}, {"longitude", type number}, {"is_rated", Int64.Type}, {"region", type text},
+				        {"primary_cuisine", type text}, {"cuisine_count", Int64.Type}, {"cost_bucket", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

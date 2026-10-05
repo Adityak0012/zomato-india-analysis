@@ -1,0 +1,25 @@
+table DimCuisine
+	lineageTag: cea10b8f-edc4-4eaa-93e7-39fc810666ac
+
+	column cuisine
+		dataType: string
+		lineageTag: 7e2b5dd2-cd25-4bdb-a368-fdf9a08ffa96
+		summarizeBy: none
+		sourceColumn: cuisine
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCuisine = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\dell\Documents\zomato-india-analysis\data\processed\dim_cuisine.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"cuisine", type text}})
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

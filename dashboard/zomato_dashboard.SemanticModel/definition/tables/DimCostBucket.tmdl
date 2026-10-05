@@ -1,0 +1,32 @@
+table DimCostBucket
+	lineageTag: 3e59818f-261d-4930-b59b-ddf66593c62c
+
+	column cost_bucket
+		dataType: string
+		lineageTag: 54bbecd9-76ee-41f9-a882-cc9b8a05c5a4
+		summarizeBy: none
+		sourceColumn: cost_bucket
+		sortByColumn: bucket_order
+
+		annotation SummarizationSetBy = Automatic
+
+	column bucket_order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e80602ae-e7b4-4bd7-a21e-eec0bca50181
+		summarizeBy: none
+		sourceColumn: bucket_order
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCostBucket = m
+		mode: import
+		source =
+				let
+				    Source = #table(type table [cost_bucket = text, bucket_order = Int64.Type], {{"Up to 300", 1}, {"301-600", 2}, {"601-1000", 3}, {"1001-2000", 4}, {"Above 2000", 5}})
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

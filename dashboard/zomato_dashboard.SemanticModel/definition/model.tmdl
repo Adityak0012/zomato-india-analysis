@@ -1,0 +1,25 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Restaurants","RestaurantCuisines","DimCity","DimPriceRange","DimCuisine","DimCostBucket","_Measures"]
+
+annotation PBI_ProTooling = ["TMDLView_Desktop","DaxQueryView_Desktop","DevMode"]
+
+ref table Restaurants
+ref table RestaurantCuisines
+ref table DimCity
+ref table DimPriceRange
+ref table DimCuisine
+ref table _Measures
+ref table DimCostBucket
+
+ref cultureInfo en-US
+

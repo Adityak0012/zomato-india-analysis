@@ -1,0 +1,15 @@
+# Power BI local/cache files
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+*.pbix
+dashboard/zomato_dashboard.SemanticModel/DAXQueries/
+dashboard/zomato_dashboard.SemanticModel/TMDLScripts/
+
+# Python / Jupyter
+.ipynb_checkpoints/
+__pycache__/
+
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store

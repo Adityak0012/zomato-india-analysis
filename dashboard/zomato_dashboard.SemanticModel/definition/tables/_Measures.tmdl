@@ -1,0 +1,133 @@
+table _Measures
+	lineageTag: 22ce124f-095d-493f-b56e-0a8455d8f8b4
+
+	measure 'Total Restaurants' = COUNTROWS ( Restaurants )
+		formatString: #,0
+		lineageTag: f042631c-10f4-419b-888c-0e228a61394f
+
+	measure 'Rated Restaurants' = CALCULATE ( [Total Restaurants], Restaurants[is_rated] = 1 )
+		formatString: #,0
+		lineageTag: 1783c5ab-a6f6-41b9-9240-03c63e762fbf
+
+	measure 'Avg Rating' = AVERAGE ( Restaurants[aggregate_rating] )
+		formatString: 0.00
+		lineageTag: cd443afa-0b9f-4092-a982-7959b34577a5
+
+	measure 'Median Cost for Two' = MEDIAN ( Restaurants[average_cost_for_two] )
+		formatString: "₹"#,0
+		lineageTag: 8e3e892e-2482-4a0b-93d9-777982c31800
+
+	measure 'Total Votes' = SUM ( Restaurants[votes] )
+		formatString: #,0
+		lineageTag: 01c1dd79-9376-4034-8743-e3f74b3232d5
+
+	measure 'Median Votes' = MEDIAN ( Restaurants[votes] )
+		formatString: #,0
+		lineageTag: 82400f8c-86df-4694-9d3d-f2126650aad4
+
+	measure 'Online Delivery %' = DIVIDE ( CALCULATE ( [Total Restaurants], Restaurants[has_online_delivery] = 1 ) + 0, [Total Restaurants] )
+		formatString: 0.0%
+		lineageTag: f357c530-af82-4766-b3d1-5ef989640433
+
+	measure 'Table Booking %' = DIVIDE ( CALCULATE ( [Total Restaurants], Restaurants[has_table_booking] = 1 ), [Total Restaurants] )
+		formatString: 0.0%
+		lineageTag: c5d4d43b-95d3-454c-9176-6aec5dde234e
+
+	measure 'Rated %' = DIVIDE ( [Rated Restaurants], [Total Restaurants] )
+		formatString: 0.0%
+		lineageTag: 2262b46c-546b-43b9-a59b-332705d0c110
+
+	measure 'Rated 4+ %' = DIVIDE ( CALCULATE ( [Rated Restaurants], Restaurants[aggregate_rating] >= 4 ), [Rated Restaurants] )
+		formatString: 0.0%
+		lineageTag: b0e201b6-4f97-4f6b-8d95-01b8c9d4a67c
+
+	measure 'Avg Rating vs Overall' = [Avg Rating] - CALCULATE ( [Avg Rating], REMOVEFILTERS () )
+		formatString: +0.00;-0.00;0.00
+		lineageTag: b765e049-0e23-47d1-b2e1-63627d36a462
+
+	measure 'City Rank by Rating' = IF ( HASONEVALUE ( DimCity[city] ), RANKX ( ALL ( DimCity[city] ), [Avg Rating], , DESC, DENSE ) )
+		formatString: 0
+		lineageTag: 81ae924e-311a-4e9d-b8bd-1673974f5064
+
+	measure 'Selected City' = IF ( ISFILTERED ( DimCity[city] ), CONCATENATEX ( VALUES ( DimCity[city] ), DimCity[city], ", " ), "All cities" )
+		lineageTag: 0d3fb2c1-79c7-47f5-bc37-00c6331d71d7
+
+	measure 'Avg Rating (30+ rated)' = IF ( [Rated Restaurants] >= 30, [Avg Rating] )
+		formatString: 0.00
+		lineageTag: 6748ea49-c17d-4cad-ae85-96fea6d8260e
+
+	measure 'Avg Rating (50+ rated)' = IF ( [Rated Restaurants] >= 50, [Avg Rating] )
+		formatString: 0.00
+		lineageTag: 6406c027-f857-4d2d-b658-ec744b50ea8b
+
+	measure 'Cuisines Offered' = DISTINCTCOUNT ( RestaurantCuisines[cuisine] )
+		formatString: #,0
+		lineageTag: 9cb21f5f-02e6-4638-a8ed-e6bc43975a47
+
+	measure 'Avg Cuisines per Restaurant' = AVERAGE ( Restaurants[cuisine_count] )
+		formatString: 0.0
+		lineageTag: c138b17e-79ee-4f0d-99e1-446356838de5
+
+	measure Localities = DISTINCTCOUNT ( Restaurants[locality] )
+		formatString: #,0
+		lineageTag: e759eae0-cb45-4e32-a8ca-34050236c047
+
+	measure 'Restaurants with Cost' = CALCULATE ( [Total Restaurants], NOT ISBLANK ( Restaurants[average_cost_for_two] ) )
+		formatString: #,0
+		lineageTag: f102c5b8-7086-46d7-9822-0bd81c598fa7
+
+	measure 'Avg Rating with Cost' = CALCULATE ( [Avg Rating], NOT ISBLANK ( Restaurants[average_cost_for_two] ) )
+		formatString: 0.00
+		lineageTag: ca70e4f2-2ddc-4325-a09d-e034b36004e2
+
+	measure 'Popular Restaurants' = CALCULATE ( [Total Restaurants], Restaurants[votes] >= 500 )
+		formatString: #,0
+		lineageTag: 5c30cd9d-490c-4885-9e4b-ca08762ebbcc
+
+	measure 'Popular Avg Rating' = CALCULATE ( [Avg Rating], Restaurants[votes] >= 500 )
+		formatString: 0.00
+		lineageTag: 6b24785d-599f-4f48-9642-d4cb59439567
+
+	measure 'Popular Median Cost' = CALCULATE ( [Median Cost for Two], Restaurants[votes] >= 500 )
+		formatString: "₹"#,0
+		lineageTag: 26817ebf-31c6-4db7-a97c-a19d775606b9
+
+	measure 'Popular Delivery %' = CALCULATE ( [Online Delivery %], Restaurants[votes] >= 500 )
+		formatString: 0.0%
+		lineageTag: 0a15e8ef-609e-4a8f-a718-2fc98f18798f
+
+	measure 'Rating (500+ votes)' = CALCULATE ( [Avg Rating], Restaurants[votes] >= 500 )
+		formatString: 0.0
+		lineageTag: b7c5427b-0e5f-4e72-88ec-1e4fb527bfc2
+
+	measure 'Votes (500+ votes)' = CALCULATE ( [Total Votes], Restaurants[votes] >= 500 )
+		formatString: #,0
+		lineageTag: b1d2297a-d091-4e79-b5ea-774d6335ed49
+
+	measure 'Cost for Two (500+ votes)' = CALCULATE ( MAX ( Restaurants[average_cost_for_two] ), Restaurants[votes] >= 500 )
+		formatString: "₹"#,0
+		lineageTag: a0875946-cda2-4f97-a969-bf6aa6954507
+
+	measure 'Table Booking Rated %' = CALCULATE ( [Rated %], Restaurants[has_table_booking] = 1 )
+		formatString: 0.0%
+		lineageTag: 24ea46da-b9b7-486e-95be-a04a783e89c4
+
+	column Column1
+		dataType: string
+		lineageTag: 90258c41-9023-4eaf-8f96-57391bf218e8
+		summarizeBy: none
+		sourceColumn: Column1
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

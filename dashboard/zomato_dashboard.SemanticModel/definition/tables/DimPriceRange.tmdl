@@ -1,0 +1,37 @@
+table DimPriceRange
+	lineageTag: 689e2744-7799-48f1-872e-ea86c57b4acb
+
+	column price_range
+		dataType: int64
+		formatString: 0
+		lineageTag: dee3f189-5775-4d54-8ed7-1b4b568f46a1
+		summarizeBy: none
+		sourceColumn: price_range
+
+		annotation SummarizationSetBy = Automatic
+
+	column price_label
+		dataType: string
+		lineageTag: ca9b1070-16c2-4920-bc24-d736e96c6126
+		summarizeBy: none
+		sourceColumn: price_label
+		sortByColumn: price_range
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimPriceRange = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\dell\Documents\zomato-india-analysis\data\processed\dim_price_range.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Typed = Table.TransformColumnTypes(Headers, {{"price_range", Int64.Type}, {"price_label", type text}})
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
