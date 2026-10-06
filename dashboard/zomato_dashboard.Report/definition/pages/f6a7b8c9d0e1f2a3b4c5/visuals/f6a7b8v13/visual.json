@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.0.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "f6a7b8v13",
   "position": {
     "x": 340,
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "Restaurants.restaurant_name",
-              "nativeQueryRef": "restaurant_name"
+              "nativeQueryRef": "restaurant_name",
+              "active": true
             }
           ]
         },
